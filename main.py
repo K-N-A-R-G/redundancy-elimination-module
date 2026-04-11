@@ -25,3 +25,18 @@
         self.nlen = len(name)
 
 # --- END OF NODE UPDATE ---
+
+
+# --- SYNC DATA BLOCK: INSPECT ---
+    def __init__(self, name, kind, *, default=_empty, annotation=_empty):
+        try:
+            self._kind = _ParameterKind(kind)
+        except ValueError:
+            raise ValueError(f'value {kind!r} is not a valid Parameter.kind')
+        if default is not _empty:
+            if self._kind in (_VAR_POSITIONAL, _VAR_KEYWORD):
+                msg = '{} parameters cannot have default values'
+                msg = msg.format(self._kind.description)
+                raise ValueError(msg)
+
+# --- END OF NODE UPDATE ---
